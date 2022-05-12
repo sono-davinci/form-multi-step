@@ -1,2 +1,2 @@
 # form-multi-step
-formulário de varios etapas.
+formulário de varias etapas.

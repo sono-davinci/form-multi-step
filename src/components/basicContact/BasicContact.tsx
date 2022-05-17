@@ -1,11 +1,10 @@
-import { Container, Field } from "./styled"
+import { Container, Field, Button, Buttons } from "./styled"
 import { props } from "../../types/input"
 
-const BasicContact = ({setInput, input}: props) => {
+const BasicContact = ({setInput, input ,nextStep ,prevStep}: props) => {
     return(
         <Container
-        initial={{ opacity: 0, x: 320}}
-        animate={{ opacity: 1, x: 0 }}
+        animate={{x: [220, 0]}}
         >
 
             <Field>
@@ -17,6 +16,23 @@ const BasicContact = ({setInput, input}: props) => {
                 <label htmlFor="phone">Celular</label>
                 <input type="number" id="phone" name="phone" onChange={(e) => setInput({...input, [e.target.name]: e.target.value})} value={input.phone} />
             </Field>
+        <Buttons>
+            <Button
+                    animate={{x: [220, 0]}}
+                    onClick={prevStep}
+                >
+                    Anterior
+            </Button>
+
+            <Button
+                    animate={{x: [120, 0]}}
+                    onClick={nextStep }
+                >
+                    Proximo
+            </Button>
+
+
+        </Buttons>
 
         </Container>
     )

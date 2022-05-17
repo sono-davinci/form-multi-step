@@ -8,6 +8,8 @@ export interface input {
 }
 
 export interface props{
-    input : input        
+    input: input
     setInput:  React.Dispatch<React.SetStateAction<input>>
+    nextStep: () => number
+    prevStep?: () => number
 }

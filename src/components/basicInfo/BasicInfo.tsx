@@ -1,13 +1,14 @@
-import { Container, Field } from "./styled"
+import { Container, Field, Button } from "./styled"
 import { props } from "../../types/input"
 
 
-const BasicInfo = ({setInput, input}: props) => {
+const BasicInfo = ({setInput, input , nextStep}: props) => {
+
+    
 
     return(
         <Container
-        initial={{ opacity: 0, x: 320}}
-        animate={{ opacity: 1, x: 0 }}
+        animate={{x: [220, 0]}}
         >
 
             <Field>
@@ -20,6 +21,13 @@ const BasicInfo = ({setInput, input}: props) => {
                 <input type="text" id="lastName" name="lastName" onChange={(e) => setInput({...input, [e.target.name]: e.target.value})} value={input.lastName} />
             </Field>
 
+            <Button
+                animate={{x: [220, 0]}}
+                onClick={nextStep}
+            >
+                Proximo
+            </Button>
+            
         </Container>
     )
 } 

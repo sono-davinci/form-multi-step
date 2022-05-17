@@ -1,11 +1,10 @@
-import { Container, Field } from "./styled"
+import { Container, Field, Button, Buttons } from "./styled"
 import { props } from "../../types/input"
 
-const BasicBirth = ({setInput, input}: props) => {
+const BasicBirth = ({setInput, input, nextStep, prevStep}: props) => {
     return(
         <Container
-        initial={{ opacity: 0, x: 320}}
-        animate={{ opacity: 1, x: 0 }}
+            animate={{x: [220, 0]}}
         >
 
             <Field>
@@ -16,7 +15,25 @@ const BasicBirth = ({setInput, input}: props) => {
             <Field>
                 <label htmlFor="year">Ano</label>
                 <input type="number" id="year" name="year" onChange={(e) => setInput({...input, [e.target.name]: e.target.value})} />
-            </Field>  
+            </Field> 
+
+            <Buttons>
+
+                <Button
+                        animate={{x: [220, 0]}}
+                        onClick={prevStep}
+                    >
+                        Anterior
+                </Button>
+
+                <Button
+                        animate={{x: [220, 0]}}
+                        onClick={nextStep}
+                    >
+                        submit
+                </Button>
+
+            </Buttons>
 
         </Container>
     )

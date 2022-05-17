@@ -28,3 +28,21 @@ export const Field = styled.div`
     }
 
 `
+
+export const Button = styled(motion.button)`
+    width: 50%;
+    font-weight: 900;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: blue;
+    cursor: pointer;
+`
+
+export const Buttons = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+`

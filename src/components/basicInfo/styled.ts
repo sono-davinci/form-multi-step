@@ -18,3 +18,13 @@ export const Field = styled.div`
     }
 
 `
+export const Button = styled(motion.button)`
+    width: 100%;
+    font-weight: 900;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: blue;
+    cursor: pointer;
+`

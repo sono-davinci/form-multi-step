@@ -1,46 +1,55 @@
 import { FormEvent, useState } from "react"
-import { ContainerForm, Button, Buttons } from "./styled"
+import { ContainerForm } from "./styled"
 import BasicInfo from "../basicInfo/BasicInfo"
 import BasicContact from "../basicContact/BasicContact"
 import BasicBirth from "../basicBirth/BasicBirth"
 import { input } from "../../types/input"
 
-const Form = () => {
-    const init = {name: '', lastName: '', email: '', phone:  0, month: 0, year: 0}
-    
-    const [input, setInput] = useState<input>(init)
-    const [basic, setBasic] = useState<number>(0)
+const init = {name: '', lastName: '', email: '', phone:  0, month: 0, year: 0}
 
-    const Element = [<BasicInfo setInput={setInput} input={input}/>, <BasicContact setInput={setInput} input={input}/>, <BasicBirth setInput={setInput} input={input}/>]
+const Form = () => {
+    const [input, setInput] = useState<input>(init)
+    const [step, setStep] = useState<number>(0)
+
+    let currentStep = step
+    
+    const nextStep = () => currentStep = step + 1
+    const prevStep = () => currentStep = step - 1
+
+    const info = () => input.name.length > 3 && input.lastName.length > 3 ?  setStep(currentStep) : setStep(0)
+
+    const contact = () => {
+        const currentPhone = String(input.phone) 
+
+        if(currentPhone.length === 9 && input.email.length > 0){
+            return setStep(currentStep)
+        }
+
+        return setStep(1)
+    }
+
+    const birth = () => { 
+        if((input.month > 0 && input.month <= 12 ) && input.year > 1922 && input.year < 2012){
+            return (alert('Cadastro concluído! Obrigado ' + input.name), setInput(init), currentStep = 0, setStep(currentStep))
+        }
+        return setStep(2)
+    }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-
-        if(basic == 1){
-            if(input.name.length > 0 && input.lastName.length > 0){
-                return
-            }else {
-                setBasic(0)
-            }
-        }else if(basic == 2){
-            if(input.phone > 0 && input.email.length > 0){
-                return
-            }else {
-                setBasic(1)
-            }
-        }else if(basic == 3){
-            if(input.month > 0 && input.year > 0){
-                alert('cadastro concluido! Obrigado')
-                setInput(init)
-                return setBasic(0)
-            }else {
-                setBasic(2)
-            }
+        console.log(currentStep)
+        if(currentStep === 1){
+            info()
+        }else if(currentStep === 2){
+            contact()
+        }else if(currentStep === 3){
+            birth()
+        }else{
+            setStep(currentStep)
         }
-
+        
     }
     
-
     return(
 
         <ContainerForm
@@ -49,34 +58,17 @@ const Form = () => {
 
             <h1>Cadastro</h1>
 
-            { Element[basic] }
+            {
+                step === 0 && <BasicInfo setInput={setInput} input={input} nextStep={nextStep} />
+            }
 
-            <Buttons>
-             
-                <Button
-                    style={{display: basic > 0 ? 'block' : 'none'  }}
-                    onClick={() => setBasic(basic - 1)}
-                >
-                    Anterior
-                </Button>
-                  
-               
+            {
+                step === 1 && <BasicContact setInput={setInput} input={input} nextStep={nextStep} prevStep={prevStep}/>
+            }
 
-                <Button
-                    style={{display:  basic === Element.length - 1 ? 'none' : 'block'}}
-                    onClick={() => setBasic(basic + 1)}
-                >
-                    Proximo
-                </Button>
-
-                <Button
-                style={{display: basic === Element.length - 1 ? 'block' : 'none'}}
-                onClick={() => setBasic(basic + 1)}
-                >
-                    Enviar
-                </Button>
-
-            </Buttons>
+            {
+                step === 2 && <BasicBirth setInput={setInput} input={input} nextStep={nextStep} prevStep={prevStep}/>
+            }
 
         </ContainerForm>
 

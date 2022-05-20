@@ -3,9 +3,6 @@ import { props } from "../../types/input"
 
 
 const BasicInfo = ({setInput, input , nextStep}: props) => {
-
-    
-
     return(
         <Container
         animate={{x: [220, 0]}}

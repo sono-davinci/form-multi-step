@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
-
 
 export const ContainerForm = styled.form`
     width: 400px;
@@ -15,4 +13,10 @@ export const ContainerForm = styled.form`
         text-align: center;
         margin-bottom: 1rem;
     }
+`
+
+export const ContainerSteps = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0;
 `

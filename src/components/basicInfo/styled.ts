@@ -26,5 +26,10 @@ export const Button = styled(motion.button)`
     border-radius: 1rem;
     padding: 1rem;
     background: blue;
+    transition: all 0.3s;
     cursor: pointer;
+
+    &:hover{
+        background: #0045ea;
+    }
 `

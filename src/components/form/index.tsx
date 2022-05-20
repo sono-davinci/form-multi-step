@@ -1,8 +1,11 @@
 import { FormEvent, useState } from "react"
-import { ContainerForm } from "./styled"
+import { ContainerForm, ContainerSteps } from "./styled"
+
 import BasicInfo from "../basicInfo/BasicInfo"
 import BasicContact from "../basicContact/BasicContact"
 import BasicBirth from "../basicBirth/BasicBirth"
+import Steps from "../steps/Steps"
+
 import { input } from "../../types/input"
 
 const init = {name: '', lastName: '', email: '', phone:  0, month: 0, year: 0}
@@ -10,34 +13,38 @@ const init = {name: '', lastName: '', email: '', phone:  0, month: 0, year: 0}
 const Form = () => {
     const [input, setInput] = useState<input>(init)
     const [step, setStep] = useState<number>(0)
-
     let currentStep = step
     
     const nextStep = () => currentStep = step + 1
     const prevStep = () => currentStep = step - 1
 
-    const info = () => input.name.length > 3 && input.lastName.length > 3 ?  setStep(currentStep) : setStep(0)
+    const info = () => {
+        if(input.name.length > 3 && input.lastName.length > 3 ){
+            setStep(currentStep)
+        }
+         currentStep = step
+    } 
 
     const contact = () => {
-        const currentPhone = String(input.phone) 
+        const currentPhone = String(input.phone)
 
         if(currentPhone.length === 9 && input.email.length > 0){
             return setStep(currentStep)
         }
 
-        return setStep(1)
+        return  currentStep = step
     }
 
-    const birth = () => { 
+    const birth = () => {
         if((input.month > 0 && input.month <= 12 ) && input.year > 1922 && input.year < 2012){
             return (alert('Cadastro concluído! Obrigado ' + input.name), setInput(init), currentStep = 0, setStep(currentStep))
         }
-        return setStep(2)
+        return currentStep = step
     }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        console.log(currentStep)
+        
         if(currentStep === 1){
             info()
         }else if(currentStep === 2){
@@ -49,7 +56,7 @@ const Form = () => {
         }
         
     }
-    
+
     return(
 
         <ContainerForm
@@ -57,6 +64,14 @@ const Form = () => {
         >
 
             <h1>Cadastro</h1>
+
+            <ContainerSteps>
+
+                <Steps step={'Info'} isActive={step >= 0}/>
+                <Steps step={'Contact'} isActive={step >= 1}/>
+                <Steps step={'Birth'} isActive={step >= 2}/>
+
+            </ContainerSteps>
 
             {
                 step === 0 && <BasicInfo setInput={setInput} input={input} nextStep={nextStep} />
